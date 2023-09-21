@@ -1,0 +1,155 @@
+@import url('normalize.css');
+
+body{
+    font-family: 'Montserrat', sans-serif;
+    background: #010101;
+}
+
+.wrapper{
+    color: #D5D8DD;
+    display: flex;
+}
+
+.rules{
+    width: 33%;
+    display: flex;
+    flex-direction: column;
+}
+
+.rules_header{
+    padding: 0 0 0 20px;
+    font-size: 32px;
+    font-weight: 700;
+}
+
+.rules_list{
+    list-style-type: none;
+    padding: 0;
+    margin: 0 0 0 20px;
+    border: solid #39383D;
+}
+
+.rules_list_item{
+    opacity: 0;     /*изначально текст прозрачный(для анимации) */
+    margin: 15px;
+    transition: 1000ms;
+}
+
+/* Анимация появления текста на странице */
+@keyframes rules_list_item {
+    0%{
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.rules_list_item {
+    animation: rules_list_item 1s ease-in-out 1s forwards;
+}
+
+.rules_list_item:hover{
+    color:#fff;
+}
+
+.game_content{
+    margin: 26px 0 0 0;
+    width: 33%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.random_number{
+    font-size: 40px;
+    margin: 15px;
+    width: 150px;
+    height: 80px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: solid #D5D8DD;
+    border-radius: 15px;
+}
+
+.radio_buttons{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.guess{
+    margin: 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-weight: 200;
+    font-size: 20px;
+}
+
+.radio-input{
+    width: 20px;
+    height: 20px;
+}
+
+.radio-input:checked + label{
+    font-weight: 500;
+}
+
+.bet_label{
+    font-size: 40px;
+    margin: 20px;
+}
+
+.slider_bet{
+    width: 300px;
+}
+
+.choose_bet{
+    margin: 20px;
+    font-size: 32px;
+}
+
+.play_button{
+    width: 250px;
+    height: 50px;
+    border-radius: 10px;
+    font-size: 32px;
+    font-weight: 500;
+}
+
+.info{
+    width: 33%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.balance{
+    align-self: flex-start;
+    margin: 40px;
+    font-size: 42px;
+}
+
+.last_game_info{
+    align-self: flex-start;
+    padding: 15px 40px 15px 15px;
+    margin: 400px 0 0 40px;
+    border: solid #39383D;
+    
+}
+
+.last_game_header{
+    padding: 0;
+    margin: 0;
+    font-size: 32px;
+}
+
+.last_game_item{
+    margin: 20px 0;
+    list-style-type: none;
+}
