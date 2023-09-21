@@ -135,6 +135,11 @@ body{
     border-radius: 10px;
     font-size: 32px;
     font-weight: 500;
+    transition: 0.2s;
+}
+
+.play_button:hover{
+    transform: scale(1.1);
 }
 
 .info{
