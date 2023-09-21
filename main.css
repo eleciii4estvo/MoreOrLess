@@ -8,6 +8,22 @@ body{
 .wrapper{
     color: #D5D8DD;
     display: flex;
+    opacity: 0;
+}
+
+@keyframes wrapper {
+    0%{
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.wrapper{
+    animation: wrapper 1s ease-in-out 1s forwards;
 }
 
 .rules{
@@ -140,7 +156,22 @@ body{
     padding: 15px 40px 15px 15px;
     margin: 400px 0 0 40px;
     border: solid #39383D;
-    
+    opacity: 0;
+}
+
+@keyframes last_game_info{
+    0%{
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.last_game_info{
+    animation: last_game_info 1s ease-in-out 1s forwards;
 }
 
 .last_game_header{
