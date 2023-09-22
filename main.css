@@ -25,6 +25,12 @@ body{
 .wrapper{
     animation: wrapper 1s ease-in-out 1s forwards;
 }
+/* Delete this, when enable up
+.wrapper{
+    color: #D5D8DD;
+    display: flex;
+    opacity: 1;
+} */
 
 .rules{
     width: 33%;
@@ -140,6 +146,30 @@ body{
 
 .play_button:hover{
     transform: scale(1.1);
+}
+
+.allert_msg{
+    font-size: 25px;
+    opacity: 0;
+}
+
+@keyframes allert_msg {
+    0%{
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.allert_msg {
+    animation: allert_msg 0.5s ease-in-out 0.5s forwards;
+}
+
+.allert_box{
+    padding-top: 100px;
 }
 
 .info{

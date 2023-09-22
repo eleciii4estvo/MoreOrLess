@@ -30,34 +30,38 @@
                 <div class="guess">
                     <input type="radio" name="option" id="less" class="radio-input">
                     <label for="option1">less</label>
-                    <label id="coefficient_in_game">1.7</label>
+                    <label id="coefficient_in_game_less">1.7</label>
                 </div>
                 <div class="guess">
                     <input type="radio" name="option" id="equally" class="radio-input">
                     <label for="option2">equally</label>
-                    <label id="coefficient_in_game">98</label>
+                    <label id="coefficient_in_game_equally">98</label>
                 </div>
                 <div class="guess">
                     <input type="radio" name="option" id="more" class="radio-input">
                     <label for="option3">more</label>
-                    <label id="coefficient_in_game">6.7</label>
+                    <label id="coefficient_in_game_more">6.7</label>
                 </div>
             </div>
             <h2 class="bet_label">BET</h2>
             <input type="range" min="0" max="100" step="1" value="50" id="slider" class="slider_bet">
-            <span class="choose_bet" id="slider-value">50</span>
-            <button class="play_button">PLAY</button>
+            <span class="choose_bet" id="slider_value">0</span>
+            <button class="play_button" id="play_btn">PLAY</button>
+            <div class="allert_box" id="allert_message">
+                
+            </div>
+            <!-- <span class="allert_msg">You didn't make an assumption!</span> -->
         </div>
         <div class="info">
             <div class="balance">Balance: <span id="balance">10000</span></div>
             <ul class="last_game_info"><h3 class="last_game_header">Last game</h3>
-                <li class="last_game_item">Result: <span>win</span></li>
-                <li class="last_game_item">Initial: <span>50</span></li>
-                <li class="last_game_item">Envisioned: <span>76</span></li>
-                <li class="last_game_item">Guess: <span>more</span></li>
-                <li class="last_game_item">Bet: <span>100</span></li>
-                <li class="last_game_item">Coefficient: <span>5</span></li>
-                <li class="last_game_item">Time: <span>22:08:21</span></li>
+                <li class="last_game_item">Result: <span id="result"></span></li>
+                <li class="last_game_item">Initial: <span id="initial"></span></li>
+                <li class="last_game_item">Envisioned: <span id="envision"></span></li>
+                <li class="last_game_item">Guess: <span id="guess"></span></li>
+                <li class="last_game_item">Bet: <span id="bet"></span></li>
+                <li class="last_game_item">Coefficient: <span id="coefficient"></span></li>
+                <li class="last_game_item">Time: <span id="time"></span></li>
             </ul>
         </div>
     </div>
