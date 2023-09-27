@@ -11,7 +11,11 @@ const balanceField = document.querySelector("#balance")
 const allertMsg = document.querySelector("#allert_message")
 const slider = document.querySelector("#slider")
 const sliderValue = document.querySelector("#slider_value")
+const mainPage = document.querySelector(".wrapper")
+const lostPage = document.querySelector(".lost_window")
 //Last Game
+const lastGameResultInfo = document.querySelector(".result_info")
+const lastGameIncome = document.querySelector(".last_game_income")
 const lastGameResult = document.querySelector("#result")
 const lastGameInitial = document.querySelector("#initial")
 const lastGameEnvisioned = document.querySelector("#envision")
@@ -20,6 +24,7 @@ const lastGameBet = document.querySelector("#bet")
 const lastGameCoefficient = document.querySelector("#coefficient")
 const lastGameTime = document.querySelector("#time")
 const time = new Date()
+const timeOut = 4000
 let cfLessNum = 0
 let cfEqualNum = 98
 let cfMoreNum = 0
@@ -35,14 +40,14 @@ let isMessageSend = false
 let isBtnEnable = true
 let timeoutInProgress = false
 let resultVal = ''
-
+let isGame = true
+let income = ''
+let resultInf = ''
 
 //Отображение баланса и задание рэнджа слайдера
 function balanceSet(){
-    //Задание баланса
-    balanceField.textContent = money.toFixed(1)
-    //Задание рэнджа для слайдера
-    slider.setAttribute("max", money)
+    balanceField.textContent = money.toFixed(1) //Задание баланса
+    slider.setAttribute("max", money)           //Задание рэнджа для слайдера
 }
 
 balanceSet()
@@ -50,27 +55,59 @@ balanceSet()
 //Первый раунд после загрузки страницы
 game()
 
-
 function lastGameInfo(){
-    lastGameResult.textContent = resultVal
-    lastGameInitial.textContent = initNum
-    lastGameEnvisioned.textContent = envisionedNumLast
-    lastGameGuess.textContent = selection
-    lastGameBet.textContent = bet
-    lastGameCoefficient.textContent = userCf
-    lastGameTime.textContent = time.toLocaleTimeString()
+    if (bet==0 || selection=='nothing'){
+        lastGameResult.textContent = "unscored"
+        lastGameInitial.textContent = '-'
+        lastGameEnvisioned.textContent = '-'
+        lastGameGuess.textContent = '-'
+        lastGameBet.textContent = '-'
+        lastGameCoefficient.textContent = '-'
+        lastGameTime.textContent = time.toLocaleTimeString()
+    } else{
+        lastGameResult.textContent = resultVal
+        lastGameInitial.textContent = initNum
+        lastGameEnvisioned.textContent = envisionedNumLast
+        lastGameGuess.textContent = selection
+        lastGameBet.textContent = bet
+        lastGameCoefficient.textContent = userCf
+        lastGameTime.textContent = time.toLocaleTimeString()
+    }
+}
+
+//Функция, которая выводит около баланса информацию о том сколько денег прибавилось/отнялось
+function incomingInfo(){
+    lastGameIncome.insertAdjacentHTML('beforeend',
+    `            
+    <span class="last_income">${income}</span>
+    `
+    )
+    setTimeout(()=>{
+        const insertMsg = lastGameIncome.querySelector('.last_income')
+        insertMsg.remove()
+    }, timeOut)
+}
+
+//Функция, которая выводит информациб о выигрыше или проигрыше каждый раунд
+function resultInfo(){
+    lastGameResultInfo.insertAdjacentHTML('beforeend',
+    `            
+    <h2 class="result_text">${resultInf}</h2>
+    `
+    )
+    setTimeout(()=>{
+        const insertMsg = lastGameResultInfo.querySelector('.result_text')
+        insertMsg.remove()
+    }, timeOut)
 }
 
 slider.addEventListener("input", function () {
-    // Обновляем значение элемента #slider_value при изменении ползунка
-    sliderValue.textContent = slider.value
+    sliderValue.textContent = slider.value  // Обновляем значение элемента #slider_value при изменении ползунка
   })
 
 function randomNumber(){
     return Math.floor(Math.random() * 100) + 1
 }
-
-
 
 //Расчитывание коэффициентов
 function coefficientSelection(initNum){
@@ -95,8 +132,6 @@ function coefficientSelection(initNum){
     cfMore.textContent=cfMoreNum
 }
 
-
-//Логика выбора ответа
 // Обработчик события для радиокнопок
 function handleRadioButtonChange() {
     if (lessRadioButton.checked) {
@@ -113,12 +148,13 @@ function handleRadioButtonChange() {
       userCf = cfMoreNum
     }
   }
-  // Добавляем обработчик события к каждой радиокнопке
-  lessRadioButton.addEventListener("change", handleRadioButtonChange)
-  equallyRadioButton.addEventListener("change", handleRadioButtonChange)
-  moreRadioButton.addEventListener("change", handleRadioButtonChange)
 
-//Получение результата на серверной части
+// Добавляем обработчик события к каждой радиокнопке
+lessRadioButton.addEventListener("change", handleRadioButtonChange)
+equallyRadioButton.addEventListener("change", handleRadioButtonChange)
+moreRadioButton.addEventListener("change", handleRadioButtonChange)
+
+//Получение результата на 'серверной' части
 function getAnswer(initNum, envisionedNum){
     if(initNum>envisionedNum){
         ans = 'less'
@@ -129,34 +165,36 @@ function getAnswer(initNum, envisionedNum){
     }
 }
 
-
 //Проверка: выиграл человек или проиграл
 function result(){
     if (ans==selection){
         money += bet * userCf
+        income = `+${(bet * userCf).toFixed(1)}`
+        resultInf = 'You Win!'
         resultVal='win'
-        console.log('win')
+        // console.log('win')
     } else{
         money -= bet
+        income = `-${bet}`
+        resultInf = 'You Lose('
         resultVal='lose'
-        console.log('lose')
+        // console.log('lose')
     }
+    incomingInfo()
+    resultInfo()
 }
 
 //Показ второго числа перед новым раундом
 function autopsy(){
     envisioned.textContent=envisionedNum
     timeoutInProgress=true
-
     setTimeout(()=>{
         envisioned.textContent='?',
         isBtnEnable=true
-    }, 5000)
-
-    console.log('NewRound')
+    }, timeOut)
+    // console.log('NewRound')
 }
 
-//Пользователь нажимает на кнопку PLAY
 //Проверка на попытку начать игру без выбора ответа
 function checkAnswerValid(){
     if(selection=='nothing' && !isMessageSend){
@@ -166,18 +204,53 @@ function checkAnswerValid(){
         `
         )
         isMessageSend=true
-        console.log()
         setTimeout(()=>{
             const insertMsg = allertMsg.querySelector('span')
             insertMsg.remove()
             isMessageSend=false
-        }, 5000)
-        console.log("You didn't make an assumption")
+        }, timeOut)
+        isGame=false
+        bet=0
+    }
+}
+
+//Проверка на попытку сделать ставку = 0
+function checkBet(){
+    if (bet==0 && !isMessageSend){
+        allertMsg.insertAdjacentHTML('beforeend',
+        `            
+        <span class="allert_msg"">The bet cannot be zero!</span>
+        `
+        )
+        isMessageSend=true
+        setTimeout(()=>{
+            const insertMsg = allertMsg.querySelector('span')
+            insertMsg.remove()
+            isMessageSend=false
+        }, timeOut)
+        isGame=false
     }
 }
 
 //Проверка на отрицательный баланс с дальнейшим перебросом на страницу проигрыша и предложением перезагрузить страницу
 function checkBalance(){
+    if (money<=1){
+        mainPage.style.display = 'none'
+        lostPage.insertAdjacentHTML('beforeend',
+        `
+        <div class="no_balance">
+            <h1>You lost!</h1> 
+            <h2>Your balance has gone negative.</h2>
+            <h2>To start a new game click on the button below.</h2>
+            <button id="restart">RESTART</button>
+        </div>
+        `
+        )
+        const restartBtn = document.querySelector('#restart')
+        restartBtn.addEventListener('click', function(){
+            window.location.reload()
+        })
+    }
 }
 
 
@@ -192,31 +265,34 @@ function game(){
     envisionedNum = randomNumber()
     envisionedNumLast = envisionedNum
     balanceSet()
-    //Задание коэффициентов
-    coefficientSelection(initNum)
-    //Обнуление выбора и ответа
-    ans = ''
-
-    //Получаем правильный ответ
-    getAnswer(initNum, envisionedNum)
-
-  
-    // //Сравниваем ответ пользователя с реальным ответом
+    coefficientSelection(initNum)       //Задание коэффициентов
+    ans = ''                            //Обнуление выбора и ответа
+    getAnswer(initNum, envisionedNum)   //Получаем правильный ответ
+    checkBalance()                      //Проверка на отрицательный баланс
 }
 
 //Обработка введенных значений и получение результата
-
 playBtn.addEventListener('click', ()=>{
+    bet = slider.value
     if (isBtnEnable){
         isBtnEnable=false
-        autopsy()
+        checkBet()
         checkAnswerValid()
-        bet = slider.value
-        setTimeout(()=>{game()}, 5000)
-        result()
-        
+        if (isGame){
+        autopsy()
+        } else {
+            isBtnEnable=true
+        }
+        setTimeout(()=>{game()}, timeOut)
+        result()   
         lastGameInfo()
         balanceSet()
-        console.log(`user input ${selection}, init number - ${initNum}, envisioned - ${envisionedNum}. Answer = ${ans}. Bet - ${bet}. Cf - ${userCf}. Valid ans - ${ans}`)
+        // console.log(`user input ${selection}, 
+        // init number - ${initNum}, 
+        // envisioned - ${envisionedNum}. 
+        // Answer = ${ans}. Bet - ${bet}. 
+        // Cf - ${userCf}. 
+        // Valid ans - ${ans}.
+        // income = ${income}`)
     }
 })

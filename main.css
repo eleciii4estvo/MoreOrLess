@@ -219,3 +219,83 @@ body{
     margin: 20px 0;
     list-style-type: none;
 }
+
+.no_balance{
+    color: #D5D8DD;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.no_balance > h1{
+    font-size: 50px;
+}
+
+.no_balance > h2{
+    margin: 0;
+}
+
+#restart{
+    width: 250px;
+    height: 50px;
+    border-radius: 10px;
+    font-size: 32px;
+    font-weight: 500;
+    transition: 0.2s;
+    margin: 30px;
+}
+#restart:hover{
+    transform: scale(1.1);
+}
+
+.last_game_income{
+    align-self: flex-start;
+    margin: 0 0 0 40px;
+}
+
+.last_income{
+    margin: 0;
+    padding: 0;
+    font-size: 32px;
+    color:#D5D8DD;
+    opacity: 0;
+    transition: 1000ms;
+}
+
+/* Анимация появления текста на странице */
+@keyframes last_income {
+    0%{
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.last_income {
+    animation: last_income 0.2s ease-in-out 0.2s forwards;
+}
+
+.result_info{
+    font-size: 35px;
+    padding: 40px 0 0 0;
+}
+
+@keyframes result_info {
+    0%{
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.result_info {
+    animation: result_info 0.2s ease-in-out 0.2s forwards;
+}
