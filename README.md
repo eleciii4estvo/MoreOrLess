@@ -1,6 +1,9 @@
 # MoreOrLess
-Simple web gambling
 
+
+
+Simple web gambling
+> Adaptation for mobile devices coming soon!
 ### Rules:
 1. A number from 0 to 100 appears in the top square.
 2. You choose which number is hidden behind the question mark "?": greater than, less than or equal to the current number.
