@@ -44,7 +44,10 @@ body{
     border-bottom: solid 2px #39383D;
 }
 
-
+.logo_img{
+    width:100px;
+    margin:0 0 0 50px
+}
 
 .rules{
     width: 33%;
@@ -203,8 +206,8 @@ body{
 .last_game_info{
     align-self: center;
     justify-self: center;
-    padding: 15px 40px 15px 15px;
-    margin: 200px 0 0 40px;
+    padding: 15px 70px 15px 15px;
+    margin: 10px 0 0 40px;
     border: solid #39383D;
     opacity: 0;
 }
@@ -319,4 +322,36 @@ body{
 
 .result_info {
     animation: result_info 0.2s ease-in-out 0.2s forwards;
+}
+
+footer{
+    border-top: solid 1px #39383D;
+    font-size: 14px;
+    font-weight: 200;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.footer_disclaimer{
+    padding: 10px 5px 0 5px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.footer_disclaimer > a{
+    text-decoration: underline;
+    color: #D5D8DD;
+}
+
+.footer_text{
+    padding: 0;
+    margin: 1px 0 0 0;
+}
+
+.footer_copyright{
+    padding: 0 0 10px 0;
 }
