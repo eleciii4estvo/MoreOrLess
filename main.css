@@ -3,15 +3,18 @@
 body{
     font-family: 'Montserrat', sans-serif;
     background: #010101;
+    color: #D5D8DD;
+    max-width: 100%;
+    max-height: 100%;
 }
 
-.wrapper{
+/* body{
     color: #D5D8DD;
     display: flex;
     opacity: 0;
 }
 
-@keyframes wrapper {
+@keyframes body {
     0%{
         opacity: 0;
         transform: translateY(20px);
@@ -22,15 +25,26 @@ body{
     }
 }
 
-.wrapper{
-    animation: wrapper 1s ease-in-out 1s forwards;
-}
-/* Delete this, when enable up
+body{
+    animation: body 1s ease-in-out 1s forwards;
+} */
+/* Delete this, when enable up*/
 .wrapper{
     color: #D5D8DD;
     display: flex;
     opacity: 1;
-} */
+}
+
+.header{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: solid 2px #39383D;
+}
+
+
 
 .rules{
     width: 33%;
@@ -177,7 +191,7 @@ body{
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: space-between;
+
 }
 
 .balance{
@@ -187,9 +201,10 @@ body{
 }
 
 .last_game_info{
-    align-self: flex-start;
+    align-self: center;
+    justify-self: center;
     padding: 15px 40px 15px 15px;
-    margin: 400px 0 0 40px;
+    margin: 200px 0 0 40px;
     border: solid #39383D;
     opacity: 0;
 }
@@ -251,14 +266,19 @@ body{
 }
 
 .last_game_income{
-    align-self: flex-start;
-    margin: 0 0 0 40px;
+    align-self: center;
+    justify-self: center;
+    margin: 20px 0 0 0;
+    width: 90%;
+    height: 50px;
 }
 
 .last_income{
     margin: 0;
     padding: 0;
     font-size: 32px;
+    align-self: center;
+    justify-self: center;
     color:#D5D8DD;
     opacity: 0;
     transition: 1000ms;
@@ -283,6 +303,7 @@ body{
 .result_info{
     font-size: 35px;
     padding: 40px 0 0 0;
+    height: 100px;
 }
 
 @keyframes result_info {

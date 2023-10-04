@@ -44,6 +44,11 @@ let isGame = true
 let income = ''
 let resultInf = ''
 
+
+//
+//Убрать повторение уведомлений при нескольких нажатиях на PLAY
+//
+
 //Отображение баланса и задание рэнджа слайдера
 function balanceSet(){
     balanceField.textContent = money.toFixed(1) //Задание баланса
@@ -135,15 +140,15 @@ function coefficientSelection(initNum){
 // Обработчик события для радиокнопок
 function handleRadioButtonChange() {
     if (lessRadioButton.checked) {
-      console.log("Пользователь выбрал 'less'")
+    //   console.log("Пользователь выбрал 'less'")
       selection = 'less'
       userCf = cfLessNum
     } else if (equallyRadioButton.checked) {
-      console.log("Пользователь выбрал 'equally'")
+    //   console.log("Пользователь выбрал 'equally'")
       selection = 'equally'
       userCf = cfEqualNum
     } else {
-      console.log("Пользователь выбрал 'more'")
+    //   console.log("Пользователь выбрал 'more'")
       selection = 'more'
       userCf = cfMoreNum
     }
@@ -273,6 +278,7 @@ function game(){
 
 //Обработка введенных значений и получение результата
 playBtn.addEventListener('click', ()=>{
+    resultInf=''
     bet = slider.value
     if (isBtnEnable){
         isBtnEnable=false
@@ -280,6 +286,7 @@ playBtn.addEventListener('click', ()=>{
         checkAnswerValid()
         if (isGame){
         autopsy()
+        isGame=true
         } else {
             isBtnEnable=true
         }

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
@@ -11,6 +12,13 @@
     <title>MoreOrLess</title>
 </head>
 <body>
+    <header class="header">
+        <a href="https://github.com/eleciii4estvo/MoreOrLess" target="_blank">
+            <img src="img\logo.png" alt="site_logok" width="100px">
+        </a>
+        <div class="balance">Balance: <span id="balance">10000</span></div>
+    </header>
+        <!-- СДЕЛАТЬ ФУТЕР!!! -->
     <div class="wrapper">
         <div class="rules">
             <h2 class="rules_header">Rules</h2>
@@ -34,7 +42,7 @@
                 </div>
                 <div class="guess">
                     <input type="radio" name="option" id="equally" class="radio-input">
-                    <label for="option2">equally</label>
+                    <label for="option2">equals</label>
                     <label id="coefficient_in_game_equally">98</label>
                 </div>
                 <div class="guess">
@@ -48,7 +56,7 @@
             <span class="choose_bet" id="slider_value">0</span>
             <button class="play_button" id="play_btn">PLAY</button>
             <div class="result_info">
-
+                    
             </div>
             <div class="allert_box" id="allert_message">
                 
@@ -56,9 +64,8 @@
             <!-- <span class="allert_msg">You didn't make an assumption!</span> -->
         </div>
         <div class="info">
-            <div class="balance">Balance: <span id="balance">10000</span></div>
             <div class="last_game_income">
-
+                
             </div>
             <ul class="last_game_info"><h3 class="last_game_header">Last game</h3>
                 <li class="last_game_item">Result: <span id="result"></span></li>
