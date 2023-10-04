@@ -13,6 +13,7 @@ const sliderValue = document.querySelector("#slider_value")
 const mainPage = document.querySelector(".wrapper")
 const lostPage = document.querySelector(".lost_window")
 const playBtnField = document.querySelector(".play_btn_field")
+let playBtn = ''
 //Last Game
 const lastGameResultInfo = document.querySelector(".result_info")
 const lastGameIncome = document.querySelector(".last_game_income")
@@ -42,23 +43,21 @@ let isGame = true
 let income = ''
 let resultInf = ''
 let isBtnready = false
+let isTimeOut = false
 
-
-//
-//Убрать повторение уведомлений при нескольких нажатиях на PLAY
-//
 //Проверка на верную ставку и проставленое предположение
 function checkCorrectInput(){
-    if (slider.value!=0 && selection!='nothing' && !isBtnready){
+    if (slider.value!=0 && selection!='nothing' && !isBtnready && !isTimeOut){
         playBtnField.insertAdjacentHTML('beforeend',
         `            
         <button class="play_button" id="play_btn">PLAY</button>
         `
         )
-        const playBtn = document.querySelector("#play_btn")
+        playBtn = document.querySelector("#play_btn")
         isBtnready=true
         //Обработка введенных значений и получение результата
         playBtn.addEventListener('click', ()=>{
+            isTimeOut=true
             resultInf=''
             bet = slider.value
             playBtn.remove()
@@ -68,18 +67,16 @@ function checkCorrectInput(){
             result()   
             lastGameInfo()
             balanceSet()
-                // console.log(`user input ${selection}, 
-                // init number - ${initNum}, 
-                // envisioned - ${envisionedNum}. 
-                // Answer = ${ans}. Bet - ${bet}. 
-                // Cf - ${userCf}. 
-                // Valid ans - ${ans}.
-                // income = ${income}`)
-            
+            // console.log(`user input ${selection}, 
+            // init number - ${initNum}, 
+            // envisioned - ${envisionedNum}. 
+            // Answer = ${ans}. Bet - ${bet}. 
+            // Cf - ${userCf}. 
+            // Valid ans - ${ans}.
+            // income = ${income}`)
         })
-    }
+    } 
 }
-
 
 //Отображение баланса и задание рэнджа слайдера
 function balanceSet(){
@@ -131,7 +128,12 @@ function resultInfo(){
 
 slider.addEventListener("input", function () {
     sliderValue.textContent = slider.value  // Обновляем значение элемента #slider_value при изменении ползунка
-    checkCorrectInput()
+    playButton = checkCorrectInput()
+    if (slider.value==0){
+        playBtn.remove()
+        checkCorrectInput()
+        isBtnready=false
+    }
   })
 
 function randomNumber(){
@@ -214,7 +216,11 @@ function autopsy(){
     envisioned.textContent=envisionedNum
     setTimeout(()=>{
         envisioned.textContent='?'
+        console.log('Начало отрисовки кнопки')
+        isTimeOut=false
     }, timeOut)
+
+
     // console.log('NewRound')
 }
 
@@ -238,7 +244,6 @@ function checkBalance(){
         })
     }
 }
-
 
 //Весь цикл игры, который будет повторяться при каждом раунде
 function game(){
