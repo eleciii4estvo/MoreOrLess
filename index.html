@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
     <link rel="stylesheet" type="text/css" href="main.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400&family=Merriweather:wght@300;400;700&family=Montserrat:wght@300;500;700&family=Roboto:wght@300;500;700&display=swap" rel="stylesheet">
     <script src="app.js" defer></script>
@@ -32,7 +33,7 @@
         </div>
         <div class="game_content">
             <h2 class="random_number" id="init">100</h2>
-            <h2 class="random_number" id="envisioned">?</h2>
+            <h2 class="random_number animate__animated animate__tadae" id="envisioned">?</h2>
             <div class="radio_buttons">
                 <div class="guess">
                     <input type="radio" name="option" id="less" class="radio-input">
@@ -55,13 +56,6 @@
             <span class="choose_bet" id="slider_value">0</span>
             <div class="play_btn_field">
             </div>
-            <!-- <div class="result_info">
-                    
-            </div>
-            <div class="allert_box" id="allert_message">
-                
-            </div> -->
-            <!-- <span class="allert_msg">You didn't make an assumption!</span> -->
         </div>
         <div class="info">
             <div class="last_game_income">
@@ -81,7 +75,6 @@
     </div>
     <div class="lost_window">
     </div>
-    <!-- УБЕРИ ОТМЕНУ АНИМАЦИИ ПЕРЕД КОМИТОМ! -->
     <footer>
         <div class="footer_disclaimer">
             <p class="footer_text">This website is a training project and is not intended for commercial use. All games featured on this website are designed for educational purposes only, and all virtual money given to users is of a virtual nature only.</p>                

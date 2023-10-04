@@ -45,12 +45,21 @@ let resultInf = ''
 let isBtnready = false
 let isTimeOut = false
 
+
+function animationReset(element, animation){
+    element.classList.remove(animation)
+    setTimeout(function() {
+        element.classList.add(animation)
+      }, 100)
+
+}
+
 //Проверка на верную ставку и проставленое предположение
 function checkCorrectInput(){
     if (slider.value!=0 && selection!='nothing' && !isBtnready && !isTimeOut){
         playBtnField.insertAdjacentHTML('beforeend',
         `            
-        <button class="play_button" id="play_btn">PLAY</button>
+        <button class="play_button animate__animated animate__flipInX" id="play_btn">PLAY</button>
         `
         )
         playBtn = document.querySelector("#play_btn")
@@ -64,9 +73,11 @@ function checkCorrectInput(){
             isBtnready=false
             autopsy()
             setTimeout(()=>{game()}, timeOut)
+            animationReset(envisioned, 'animate__tada')
             result()   
             lastGameInfo()
             balanceSet()
+            
             // console.log(`user input ${selection}, 
             // init number - ${initNum}, 
             // envisioned - ${envisionedNum}. 
@@ -117,10 +128,11 @@ function incomingInfo(){
 function resultInfo(){
     playBtnField.insertAdjacentHTML('beforeend',
     `            
-    <h2 class="result_text">${resultInf}</h2>
+    <h2 class="result_text animate__animated animate__fadeInDown">${resultInf}</h2>
     `
     )
     setTimeout(()=>{
+
         const insertMsg = document.querySelector('.result_text')
         insertMsg.remove()
     }, timeOut)
@@ -213,10 +225,11 @@ function result(){
 
 //Показ второго числа перед новым раундом
 function autopsy(){
+
     envisioned.textContent=envisionedNum
     setTimeout(()=>{
         envisioned.textContent='?'
-        console.log('Начало отрисовки кнопки')
+
         isTimeOut=false
     }, timeOut)
 
@@ -254,6 +267,7 @@ function game(){
     init.textContent=initNum
     //Выбор второго числа
     envisionedNum = randomNumber()
+
     envisionedNumLast = envisionedNum
     balanceSet()
     coefficientSelection(initNum)       //Задание коэффициентов

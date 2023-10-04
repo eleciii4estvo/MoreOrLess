@@ -8,9 +8,7 @@ body{
     max-height: 100%;
 }
 
-/* body{
-    color: #D5D8DD;
-    display: flex;
+body{
     opacity: 0;
 }
 
@@ -27,8 +25,8 @@ body{
 
 body{
     animation: body 1s ease-in-out 1s forwards;
-} */
-/* Delete this, when enable up*/
+}
+
 .wrapper{
     color: #D5D8DD;
     display: flex;
