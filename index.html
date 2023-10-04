@@ -53,13 +53,14 @@
             <h2 class="bet_label">BET</h2>
             <input type="range" min="0" max="100" step="1" value="50" id="slider" class="slider_bet">
             <span class="choose_bet" id="slider_value">0</span>
-            <button class="play_button" id="play_btn">PLAY</button>
-            <div class="result_info">
+            <div class="play_btn_field">
+            </div>
+            <!-- <div class="result_info">
                     
             </div>
             <div class="allert_box" id="allert_message">
                 
-            </div>
+            </div> -->
             <!-- <span class="allert_msg">You didn't make an assumption!</span> -->
         </div>
         <div class="info">
@@ -68,6 +69,7 @@
             </div>
             <ul class="last_game_info"><h3 class="last_game_header">Last game</h3>
                 <li class="last_game_item">Result: <span id="result"></span></li>
+                <li class="last_game_item">Income: <span id="income"></span></li>
                 <li class="last_game_item">Initial: <span id="initial"></span></li>
                 <li class="last_game_item">Envisioned: <span id="envision"></span></li>
                 <li class="last_game_item">Guess: <span id="guess"></span></li>
@@ -77,6 +79,9 @@
             </ul>
         </div>
     </div>
+    <div class="lost_window">
+    </div>
+    <!-- УБЕРИ ОТМЕНУ АНИМАЦИИ ПЕРЕД КОМИТОМ! -->
     <footer>
         <div class="footer_disclaimer">
             <p class="footer_text">This website is a training project and is not intended for commercial use. All games featured on this website are designed for educational purposes only, and all virtual money given to users is of a virtual nature only.</p>                
@@ -87,7 +92,6 @@
             <p class="footer_text">&copy; 2023 Eleciii4estvo, all rights reserved.</p>
         </div>
     </footer>
-    <div class="lost_window">
-    </div>
+
 </body>
 </html>

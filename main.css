@@ -33,6 +33,7 @@ body{
     color: #D5D8DD;
     display: flex;
     opacity: 1;
+    height: 100vh;
 }
 
 .header{
@@ -165,11 +166,6 @@ body{
     transform: scale(1.1);
 }
 
-.allert_msg{
-    font-size: 25px;
-    opacity: 0;
-}
-
 @keyframes allert_msg {
     0%{
         opacity: 0;
@@ -195,6 +191,17 @@ body{
     flex-direction: column;
     align-items: center;
 
+}
+
+.result_text{
+    text-align: center;
+    font-size: 36px;
+    font-weight: 500;
+}
+
+.play_btn_field{
+    width: 250px;
+    height: 100px;
 }
 
 .balance{
@@ -280,8 +287,6 @@ body{
     margin: 0;
     padding: 0;
     font-size: 32px;
-    align-self: center;
-    justify-self: center;
     color:#D5D8DD;
     opacity: 0;
     transition: 1000ms;
@@ -301,6 +306,9 @@ body{
 
 .last_income {
     animation: last_income 0.2s ease-in-out 0.2s forwards;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
 }
 
 .result_info{

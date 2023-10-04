@@ -3,7 +3,6 @@ const envisioned = document.querySelector("#envisioned")
 const cfLess = document.querySelector("#coefficient_in_game_less")
 const cfMore = document.querySelector("#coefficient_in_game_more")
 const cfEqually = document.querySelector("#coefficient_in_game_equally")
-const playBtn = document.querySelector("#play_btn")
 const lessRadioButton = document.querySelector("#less");
 const equallyRadioButton = document.querySelector("#equally");
 const moreRadioButton = document.querySelector("#more");
@@ -13,6 +12,7 @@ const slider = document.querySelector("#slider")
 const sliderValue = document.querySelector("#slider_value")
 const mainPage = document.querySelector(".wrapper")
 const lostPage = document.querySelector(".lost_window")
+const playBtnField = document.querySelector(".play_btn_field")
 //Last Game
 const lastGameResultInfo = document.querySelector(".result_info")
 const lastGameIncome = document.querySelector(".last_game_income")
@@ -23,6 +23,7 @@ const lastGameGuess = document.querySelector("#guess")
 const lastGameBet = document.querySelector("#bet")
 const lastGameCoefficient = document.querySelector("#coefficient")
 const lastGameTime = document.querySelector("#time")
+const lastGameIncomeInfo = document.querySelector("#income")
 const time = new Date()
 const timeOut = 4000
 let cfLessNum = 0
@@ -36,18 +37,49 @@ let selection = 'nothing'
 let ans = ''
 let money = 1000
 let bet = 0
-let isMessageSend = false
-let isBtnEnable = true
-let timeoutInProgress = false
 let resultVal = ''
 let isGame = true
 let income = ''
 let resultInf = ''
+let isBtnready = false
 
 
 //
 //Убрать повторение уведомлений при нескольких нажатиях на PLAY
 //
+//Проверка на верную ставку и проставленое предположение
+function checkCorrectInput(){
+    if (slider.value!=0 && selection!='nothing' && !isBtnready){
+        playBtnField.insertAdjacentHTML('beforeend',
+        `            
+        <button class="play_button" id="play_btn">PLAY</button>
+        `
+        )
+        const playBtn = document.querySelector("#play_btn")
+        isBtnready=true
+        //Обработка введенных значений и получение результата
+        playBtn.addEventListener('click', ()=>{
+            resultInf=''
+            bet = slider.value
+            playBtn.remove()
+            isBtnready=false
+            autopsy()
+            setTimeout(()=>{game()}, timeOut)
+            result()   
+            lastGameInfo()
+            balanceSet()
+                // console.log(`user input ${selection}, 
+                // init number - ${initNum}, 
+                // envisioned - ${envisionedNum}. 
+                // Answer = ${ans}. Bet - ${bet}. 
+                // Cf - ${userCf}. 
+                // Valid ans - ${ans}.
+                // income = ${income}`)
+            
+        })
+    }
+}
+
 
 //Отображение баланса и задание рэнджа слайдера
 function balanceSet(){
@@ -61,30 +93,21 @@ balanceSet()
 game()
 
 function lastGameInfo(){
-    if (bet==0 || selection=='nothing'){
-        lastGameResult.textContent = "unscored"
-        lastGameInitial.textContent = '-'
-        lastGameEnvisioned.textContent = '-'
-        lastGameGuess.textContent = '-'
-        lastGameBet.textContent = '-'
-        lastGameCoefficient.textContent = '-'
-        lastGameTime.textContent = time.toLocaleTimeString()
-    } else{
-        lastGameResult.textContent = resultVal
-        lastGameInitial.textContent = initNum
-        lastGameEnvisioned.textContent = envisionedNumLast
-        lastGameGuess.textContent = selection
-        lastGameBet.textContent = bet
-        lastGameCoefficient.textContent = userCf
-        lastGameTime.textContent = time.toLocaleTimeString()
-    }
+    lastGameResult.textContent = resultVal
+    lastGameIncomeInfo.textContent = income
+    lastGameInitial.textContent = initNum
+    lastGameEnvisioned.textContent = envisionedNumLast
+    lastGameGuess.textContent = selection
+    lastGameBet.textContent = bet
+    lastGameCoefficient.textContent = userCf
+    lastGameTime.textContent = time.toLocaleTimeString()
 }
 
 //Функция, которая выводит около баланса информацию о том сколько денег прибавилось/отнялось
 function incomingInfo(){
     lastGameIncome.insertAdjacentHTML('beforeend',
     `            
-    <span class="last_income">${income}</span>
+    <p class="last_income">${income}</p>
     `
     )
     setTimeout(()=>{
@@ -95,19 +118,20 @@ function incomingInfo(){
 
 //Функция, которая выводит информациб о выигрыше или проигрыше каждый раунд
 function resultInfo(){
-    lastGameResultInfo.insertAdjacentHTML('beforeend',
+    playBtnField.insertAdjacentHTML('beforeend',
     `            
     <h2 class="result_text">${resultInf}</h2>
     `
     )
     setTimeout(()=>{
-        const insertMsg = lastGameResultInfo.querySelector('.result_text')
+        const insertMsg = document.querySelector('.result_text')
         insertMsg.remove()
     }, timeOut)
 }
 
 slider.addEventListener("input", function () {
     sliderValue.textContent = slider.value  // Обновляем значение элемента #slider_value при изменении ползунка
+    checkCorrectInput()
   })
 
 function randomNumber(){
@@ -140,18 +164,16 @@ function coefficientSelection(initNum){
 // Обработчик события для радиокнопок
 function handleRadioButtonChange() {
     if (lessRadioButton.checked) {
-    //   console.log("Пользователь выбрал 'less'")
       selection = 'less'
       userCf = cfLessNum
     } else if (equallyRadioButton.checked) {
-    //   console.log("Пользователь выбрал 'equally'")
       selection = 'equally'
       userCf = cfEqualNum
     } else {
-    //   console.log("Пользователь выбрал 'more'")
       selection = 'more'
       userCf = cfMoreNum
     }
+    checkCorrectInput()
   }
 
 // Добавляем обработчик события к каждой радиокнопке
@@ -177,13 +199,11 @@ function result(){
         income = `+${(bet * userCf).toFixed(1)}`
         resultInf = 'You Win!'
         resultVal='win'
-        // console.log('win')
     } else{
         money -= bet
         income = `-${bet}`
         resultInf = 'You Lose('
         resultVal='lose'
-        // console.log('lose')
     }
     incomingInfo()
     resultInfo()
@@ -192,49 +212,10 @@ function result(){
 //Показ второго числа перед новым раундом
 function autopsy(){
     envisioned.textContent=envisionedNum
-    timeoutInProgress=true
     setTimeout(()=>{
-        envisioned.textContent='?',
-        isBtnEnable=true
+        envisioned.textContent='?'
     }, timeOut)
     // console.log('NewRound')
-}
-
-//Проверка на попытку начать игру без выбора ответа
-function checkAnswerValid(){
-    if(selection=='nothing' && !isMessageSend){
-        allertMsg.insertAdjacentHTML('beforeend',
-        `            
-        <span class="allert_msg"">You didn't make an assumption!</span>
-        `
-        )
-        isMessageSend=true
-        setTimeout(()=>{
-            const insertMsg = allertMsg.querySelector('span')
-            insertMsg.remove()
-            isMessageSend=false
-        }, timeOut)
-        isGame=false
-        bet=0
-    }
-}
-
-//Проверка на попытку сделать ставку = 0
-function checkBet(){
-    if (bet==0 && !isMessageSend){
-        allertMsg.insertAdjacentHTML('beforeend',
-        `            
-        <span class="allert_msg"">The bet cannot be zero!</span>
-        `
-        )
-        isMessageSend=true
-        setTimeout(()=>{
-            const insertMsg = allertMsg.querySelector('span')
-            insertMsg.remove()
-            isMessageSend=false
-        }, timeOut)
-        isGame=false
-    }
 }
 
 //Проверка на отрицательный баланс с дальнейшим перебросом на страницу проигрыша и предложением перезагрузить страницу
@@ -275,31 +256,3 @@ function game(){
     getAnswer(initNum, envisionedNum)   //Получаем правильный ответ
     checkBalance()                      //Проверка на отрицательный баланс
 }
-
-//Обработка введенных значений и получение результата
-playBtn.addEventListener('click', ()=>{
-    resultInf=''
-    bet = slider.value
-    if (isBtnEnable){
-        isBtnEnable=false
-        checkBet()
-        checkAnswerValid()
-        if (isGame){
-        autopsy()
-        isGame=true
-        } else {
-            isBtnEnable=true
-        }
-        setTimeout(()=>{game()}, timeOut)
-        result()   
-        lastGameInfo()
-        balanceSet()
-        // console.log(`user input ${selection}, 
-        // init number - ${initNum}, 
-        // envisioned - ${envisionedNum}. 
-        // Answer = ${ans}. Bet - ${bet}. 
-        // Cf - ${userCf}. 
-        // Valid ans - ${ans}.
-        // income = ${income}`)
-    }
-})
