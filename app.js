@@ -3,9 +3,9 @@ const envisioned = document.querySelector("#envisioned")
 const cfLess = document.querySelector("#coefficient_in_game_less")
 const cfMore = document.querySelector("#coefficient_in_game_more")
 const cfEqually = document.querySelector("#coefficient_in_game_equally")
-const lessRadioButton = document.querySelector("#less");
-const equallyRadioButton = document.querySelector("#equally");
-const moreRadioButton = document.querySelector("#more");
+const lessButton = document.querySelector("#less");
+const equallyButton = document.querySelector("#equally");
+const moreButton = document.querySelector("#more");
 const balanceField = document.querySelector("#balance")
 const allertMsg = document.querySelector("#allert_message")
 const slider = document.querySelector("#slider")
@@ -77,7 +77,7 @@ function checkCorrectInput(){
             result()   
             lastGameInfo()
             balanceSet()
-            
+
             // console.log(`user input ${selection}, 
             // init number - ${initNum}, 
             // envisioned - ${envisionedNum}. 
@@ -135,6 +135,7 @@ function resultInfo(){
 
         const insertMsg = document.querySelector('.result_text')
         insertMsg.remove()
+        btnClassCleaner()
     }, timeOut)
 }
 
@@ -175,25 +176,37 @@ function coefficientSelection(initNum){
     cfMore.textContent=cfMoreNum
 }
 
-// Обработчик события для радиокнопок
-function handleRadioButtonChange() {
-    if (lessRadioButton.checked) {
+// Обработчик события для кнопок
+function handleButtonChange(event) {
+    btnClassCleaner()
+    if (event.target === lessButton) {
       selection = 'less'
+      lessButton.classList.add('animate__flip')
       userCf = cfLessNum
-    } else if (equallyRadioButton.checked) {
+    } else if (event.target === equallyButton) {
       selection = 'equally'
+      equallyButton.classList.add('animate__flip')
       userCf = cfEqualNum
     } else {
       selection = 'more'
+      moreButton.classList.add('animate__flip')
       userCf = cfMoreNum
     }
     checkCorrectInput()
   }
 
-// Добавляем обработчик события к каждой радиокнопке
-lessRadioButton.addEventListener("change", handleRadioButtonChange)
-equallyRadioButton.addEventListener("change", handleRadioButtonChange)
-moreRadioButton.addEventListener("change", handleRadioButtonChange)
+//Чистка классов у кнопок
+function btnClassCleaner(){
+    moreButton.classList.remove('animate__flip')
+    lessButton.classList.remove('animate__flip')
+    equallyButton.classList.remove('animate__flip')
+    selection = 'nothing'
+}
+
+// Добавляем обработчик события к каждой кнопке
+lessButton.addEventListener("click", handleButtonChange)
+equallyButton.addEventListener("click", handleButtonChange)
+moreButton.addEventListener("click", handleButtonChange)
 
 //Получение результата на 'серверной' части
 function getAnswer(initNum, envisionedNum){
