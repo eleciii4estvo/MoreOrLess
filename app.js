@@ -77,7 +77,6 @@ function checkCorrectInput(){
             result()   
             lastGameInfo()
             balanceSet()
-
             // console.log(`user input ${selection}, 
             // init number - ${initNum}, 
             // envisioned - ${envisionedNum}. 
@@ -150,28 +149,17 @@ slider.addEventListener("input", function () {
   })
 
 function randomNumber(){
-    return Math.floor(Math.random() * 100) + 1
+    return Math.floor(Math.random() * 91) + 5   //От 5 до 95
 }
 
 //Расчитывание коэффициентов
 function coefficientSelection(initNum){
-    if (initNum>10 && initNum<90){
-        cfLessNum = ((100-initNum)/10).toFixed(1)
-        cfMoreNum = (10 - cfLessNum).toFixed(1)
-    } else if (initNum<10){
-        cfLessNum = ((100-initNum)/10).toFixed(1)
-        cfMoreNum = (1 + (10 - parseFloat(cfLessNum))).toFixed(1)
-    } else if(initNum==10){
-        cfLessNum=9
-        cfMoreNum=2
-    } else if(initNum==90){
-        cfLessNum=2
-        cfMoreNum=9
-    }
-    else{
-        cfLessNum = (1 + ((100-initNum)/10)).toFixed(1)
-        cfMoreNum = (10 - parseFloat(cfLessNum)).toFixed(1)
-    }
+    lessProbability=((100-initNum)/100).toFixed(2)
+    moreProbability=(1 - lessProbability).toFixed(2)
+    cfLessNum = lessProbability*4
+    cfMoreNum = moreProbability*4
+    cfLessNum<1 ? cfLessNum+=1 : cfLessNum=cfLessNum
+    cfMoreNum<1 ? cfMoreNum+=1 : cfMoreNum=cfMoreNum
     cfLess.textContent=cfLessNum
     cfMore.textContent=cfMoreNum
 }
