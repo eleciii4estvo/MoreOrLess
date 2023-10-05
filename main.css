@@ -161,6 +161,11 @@ body{
 .choose_bet{
     margin: 20px;
     font-size: 32px;
+    width: 300px;
+    text-align: center;
+    background: #010101;
+    color:#D5D8DD;
+    border: solid 1px #39383D;
 }
 
 .play_button{

@@ -44,6 +44,7 @@ let income = ''
 let resultInf = ''
 let isBtnready = false
 let isTimeOut = false
+let isInRangeBet = true
 
 
 function animationReset(element, animation){
@@ -56,7 +57,7 @@ function animationReset(element, animation){
 
 //Проверка на верную ставку и проставленое предположение
 function checkCorrectInput(){
-    if (slider.value!=0 && selection!='nothing' && !isBtnready && !isTimeOut){
+    if (slider.value!=0 && selection!='nothing' && !isBtnready && !isTimeOut && isInRangeBet){
         playBtnField.insertAdjacentHTML('beforeend',
         `            
         <button class="play_button animate__animated animate__flipInX" id="play_btn">PLAY</button>
@@ -139,7 +140,7 @@ function resultInfo(){
 }
 
 slider.addEventListener("input", function () {
-    sliderValue.textContent = slider.value  // Обновляем значение элемента #slider_value при изменении ползунка
+    sliderValue.value = slider.value  // Обновляем значение элемента #slider_value при изменении ползунка
     playButton = checkCorrectInput()
     if (slider.value==0){
         playBtn.remove()
@@ -148,18 +149,40 @@ slider.addEventListener("input", function () {
     }
   })
 
-function randomNumber(){
+sliderValue.addEventListener("input",function (event) {
+    slider.value = sliderValue.value
+    isInRangeBet=true
+    playButton = checkCorrectInput()
+    if(sliderValue.value>money){
+        slider.value=money
+        playBtn.remove()
+        isBtnready=false
+    }
+    if(sliderValue.value===""){
+        slider.value=0
+        playBtn.remove()
+        isBtnready=false
+    }
+  })
+
+function randomInitialNumber(){
     return Math.floor(Math.random() * 91) + 5   //От 5 до 95
+}
+
+function randomEnvisionedNumber(){
+    return Math.floor(Math.random() * 100) + 1  //от 0 до 100
 }
 
 //Расчитывание коэффициентов
 function coefficientSelection(initNum){
-    lessProbability=((100-initNum)/100).toFixed(2)
-    moreProbability=(1 - lessProbability).toFixed(2)
+    lessProbability=(100-initNum)/100
+    moreProbability=1 - lessProbability
     cfLessNum = lessProbability*4
     cfMoreNum = moreProbability*4
     cfLessNum<1 ? cfLessNum+=1 : cfLessNum=cfLessNum
     cfMoreNum<1 ? cfMoreNum+=1 : cfMoreNum=cfMoreNum
+    cfLessNum = cfLessNum.toFixed(2)
+    cfMoreNum = cfMoreNum.toFixed(2)
     cfLess.textContent=cfLessNum
     cfMore.textContent=cfMoreNum
 }
@@ -240,13 +263,13 @@ function autopsy(){
 
 //Проверка на отрицательный баланс с дальнейшим перебросом на страницу проигрыша и предложением перезагрузить страницу
 function checkBalance(){
-    if (money<=1){
+    if (money<=0){
         mainPage.style.display = 'none'
         lostPage.insertAdjacentHTML('beforeend',
         `
         <div class="no_balance">
             <h1>You lost!</h1> 
-            <h2>Your balance has gone negative.</h2>
+            <h2>Your balance is zero.</h2>
             <h2>To start a new game click on the button below.</h2>
             <button id="restart">RESTART</button>
         </div>
@@ -262,13 +285,12 @@ function checkBalance(){
 //Весь цикл игры, который будет повторяться при каждом раунде
 function game(){
     slider.value=0
-    sliderValue.textContent=0
+    sliderValue.value=0
     //Рандомное первое число
-    initNum=randomNumber()
+    initNum=randomInitialNumber()
     init.textContent=initNum
     //Выбор второго числа
-    envisionedNum = randomNumber()
-
+    envisionedNum = randomEnvisionedNumber()
     envisionedNumLast = envisionedNum
     balanceSet()
     coefficientSelection(initNum)       //Задание коэффициентов
