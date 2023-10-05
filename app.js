@@ -333,8 +333,8 @@ function randomEnvisionedNumber(){
 function coefficientSelection(initNum){
     lessProbability=(100-initNum)/100
     moreProbability=1 - lessProbability
-    cfLessNum = lessProbability*4
-    cfMoreNum = moreProbability*4
+    cfLessNum = lessProbability*5
+    cfMoreNum = moreProbability*5
     cfLessNum<1 ? cfLessNum+=1 : cfLessNum=cfLessNum
     cfMoreNum<1 ? cfMoreNum+=1 : cfMoreNum=cfMoreNum
     cfLessNum = cfLessNum.toFixed(2)
