@@ -14,6 +14,8 @@ const mainPage = document.querySelector(".wrapper")
 const lostPage = document.querySelector(".lost_window")
 const playBtnField = document.querySelector(".play_btn_field")
 let playBtn = ''
+const langBtnRu = document.querySelector("#btn_ru")
+const langBtnEn = document.querySelector("#btn_en")
 //Last Game
 const lastGameResultInfo = document.querySelector(".result_info")
 const lastGameIncome = document.querySelector(".last_game_income")
@@ -30,23 +32,169 @@ const timeOut = 4000
 let cfLessNum = 0
 let cfEqualNum = 98
 let cfMoreNum = 0
-let userCf = 0
+let userCf
 let envisionedNum = 0
-let envisionedNumLast = 0
-let initNum = 0
+let envisionedNumLast
+let initNum
 let selection = 'nothing'
+let ruSelection = ''
 let ans = ''
 let money = 1000
-let bet = 0
+let bet
 let resultVal = ''
+let ruResultVal =''
 let isGame = true
 let income = ''
 let resultInf = ''
 let isBtnready = false
 let isTimeOut = false
 let isInRangeBet = true
+let currentLang = 'ru'
 
+//Мультиязычность
+const languages = {
+    'balance_header':{
+        ru:'Баланс:',
+        en:'Balance:'
+    },
+    'rules':{
+        ru:'Правила',
+        en:'Rules'
+    },
+    'rules_item_1':{
+        ru:'1. В верхем квадрате появляется число от 0 до 100.',
+        en:'1. A number from 0 to 100 appears in the top square.'
+    },
+    'rules_item_2':{
+        ru:'2. Вы выбираете, какое число спрятанно за знаком вопроса "?": больше, меньше или равно текущему.',
+        en:'2. You choose which number is hidden behind the question mark "?": greater than, less than or equal to the current number.'
+    },
+    'rules_item_3':{
+        ru:'3. Вводите свою ставку.',
+        en:'3. Enter your bet.'
+    },
+    'rules_item_4':{
+        ru:'4. Коэффициент зависит от того, какое число с большей вероятностью выпадет следующим. Однако на вариант "равно" коэффициент всегда одинаковый = 98',
+        en:'4. The odds depend on which number is more likely to come up next. However, the odds are always the same for the "equal" option = 98'
+    },
+    'rules_item_5':{
+        ru:'5. После нажатия на кнопку "играть" выпадет следующий номер и результат игры.',
+        en:'5. After clicking on the "play" button, the next number and the result of the game will fall out.'
+    },
+    'rules_item_6':{
+        ru:'6. В правом углу экрана можно увидеть историю последней игры.',
+        en:'6. In the right corner of the screen you can see the history of the last game.'
+    },
+    'guess_less':{
+        ru:'меньше',
+        en:'less'
+    },
+    'guess_equals':{
+        ru:'равно',
+        en:'equals'
+    },
+    'guess_more':{
+        ru:'больше',
+        en:'more'
+    },
+    'bet_label':{
+        ru:'СТАВКА',
+        en:'BET'
+    },
+    'last_game':{
+        ru:'Последняя игра',
+        en:'Last game'
+    },
+    'last_game_item_1':{
+        ru:'Результат: ',
+        en:'Result: '
+    },
+    'last_game_item_2':{
+        ru:'Доход: ',
+        en:'Income: '
+    },
+    'last_game_item_3':{
+        ru:'Исходное: ',
+        en:'Initial: '
+    },
+    'last_game_item_4':{
+        ru:'Загаданное: ',
+        en:'Envisioned: '
+    },
+    'last_game_item_5':{
+        ru:'Предположение: ',
+        en:'Guess: '
+    },
+    'last_game_item_6':{
+        ru:'Ставка: ',
+        en:'Bet: '
+    },
+    'last_game_item_7':{
+        ru:'Коэффициент: ',
+        en:'Coefficient: '
+    },
+    'last_game_item_8':{
+        ru:'Время: ',
+        en:'Time: '
+    },
+    'footer_item_1':{
+        ru:'Данный сайт является учебным проектом и не предназначен для коммерческого использования. Игра, представленная на сайте, предназначена только для образовательных целей, а все виртуальные деньги, предоставляемые пользователям, носят исключительно виртуальный характер.',
+        en:'This website is a training project and is not intended for commercial use. All games featured on this website are designed for educational purposes only, and all virtual money given to users is of a virtual nature only.'
+    },
+    'footer_item_2':{
+        ru:'Этот сайт размещен на GitHub Pages. GitHub Pages предоставляет бесплатный хостинг для статических сайтов. Более подробную информацию о GitHub Pages можно получить на их официальном сайте.',
+        en:'This site is hosted on GitHub Pages. GitHub Pages provides free hosting for static websites. You can learn more about GitHub Pages on their official website.'
+    },
+    'footer_item_3':{
+        ru:'2023 Eleciii4estvo, все права защищены.',
+        en:'2023 Eleciii4estvo, all rights reserved.'
+    }
+}
 
+function changeLang(){
+    for (const key in languages) {
+        const el = document.querySelector(`[data-lang=${key}]`)
+        if(el){
+            el.textContent=languages[key][currentLang];
+        }
+    }
+    lastGameInfo()
+}
+changeLang()
+
+function clearLangClasses(){
+    langBtnRu.classList.remove('animate__swing')
+    langBtnEn.classList.remove('animate__swing')
+}
+
+function startLang(){
+    if(currentLang==="ru"){
+        langBtnRu.classList.add('animate__swing')
+    } else{
+        langBtnEn.classList.add('animate__swing')
+    }
+}
+
+startLang()
+
+function chooseLang(event){
+    if(event.target===langBtnRu){
+        clearLangClasses()
+        currentLang="ru"
+        langBtnRu.classList.add('animate__swing')
+        changeLang()
+    } else{
+        clearLangClasses()
+        currentLang="en"
+        langBtnEn.classList.add('animate__swing')
+        changeLang()
+    }
+}
+
+langBtnEn.addEventListener("click", chooseLang)
+langBtnRu.addEventListener("click", chooseLang)
+
+//Перезапуск анимации
 function animationReset(element, animation){
     element.classList.remove(animation)
     setTimeout(function() {
@@ -58,11 +206,19 @@ function animationReset(element, animation){
 //Проверка на верную ставку и проставленое предположение
 function checkCorrectInput(){
     if (slider.value!=0 && selection!='nothing' && !isBtnready && !isTimeOut && isInRangeBet){
-        playBtnField.insertAdjacentHTML('beforeend',
-        `            
-        <button class="play_button animate__animated animate__flipInX" id="play_btn">PLAY</button>
-        `
-        )
+        if(currentLang=='ru'){
+            playBtnField.insertAdjacentHTML('beforeend',
+            `            
+            <button class="play_button animate__animated animate__flipInX" id="play_btn">ИГРАТЬ</button>
+            `
+            )
+        } else{
+            playBtnField.insertAdjacentHTML('beforeend',
+            `            
+            <button class="play_button animate__animated animate__flipInX" id="play_btn">PLAY</button>
+            `
+            )
+        }       
         playBtn = document.querySelector("#play_btn")
         isBtnready=true
         //Обработка введенных значений и получение результата
@@ -101,11 +257,11 @@ balanceSet()
 game()
 
 function lastGameInfo(){
-    lastGameResult.textContent = resultVal
+    currentLang==='ru' ? lastGameResult.textContent = ruResultVal : lastGameResult.textContent = resultVal
     lastGameIncomeInfo.textContent = income
     lastGameInitial.textContent = initNum
     lastGameEnvisioned.textContent = envisionedNumLast
-    lastGameGuess.textContent = selection
+    currentLang==='ru' ? lastGameGuess.textContent = ruSelection : lastGameGuess.textContent = selection
     lastGameBet.textContent = bet
     lastGameCoefficient.textContent = userCf
     lastGameTime.textContent = time.toLocaleTimeString()
@@ -192,14 +348,17 @@ function handleButtonChange(event) {
     btnClassCleaner()
     if (event.target === lessButton) {
       selection = 'less'
+      ruSelection = 'меньше'
       lessButton.classList.add('animate__flip')
       userCf = cfLessNum
     } else if (event.target === equallyButton) {
       selection = 'equally'
+      ruSelection = 'равно'
       equallyButton.classList.add('animate__flip')
       userCf = cfEqualNum
     } else {
       selection = 'more'
+      ruSelection = 'больше'
       moreButton.classList.add('animate__flip')
       userCf = cfMoreNum
     }
@@ -235,13 +394,23 @@ function result(){
     if (ans==selection){
         money += bet * userCf
         income = `+${(bet * userCf).toFixed(1)}`
-        resultInf = 'You Win!'
+        if(currentLang=='ru'){
+            resultInf = 'Победа!'
+        } else{
+            resultInf = 'You Win!'
+        }
         resultVal='win'
+        ruResultVal='победа'
     } else{
         money -= bet
         income = `-${bet}`
-        resultInf = 'You Lose('
+        if(currentLang=='ru'){
+            resultInf = 'Проигрыш'
+        } else{
+            resultInf = 'You lose'
+        }
         resultVal='lose'
+        ruResultVal='проигрыш'
     }
     incomingInfo()
     resultInfo()
@@ -263,18 +432,31 @@ function autopsy(){
 
 //Проверка на отрицательный баланс с дальнейшим перебросом на страницу проигрыша и предложением перезагрузить страницу
 function checkBalance(){
-    if (money<=0){
+    if (money<=1){
         mainPage.style.display = 'none'
-        lostPage.insertAdjacentHTML('beforeend',
-        `
-        <div class="no_balance">
-            <h1>You lost!</h1> 
-            <h2>Your balance is zero.</h2>
-            <h2>To start a new game click on the button below.</h2>
-            <button id="restart">RESTART</button>
-        </div>
-        `
-        )
+        if(currentLang=='ru'){
+            lostPage.insertAdjacentHTML('beforeend',
+            `
+            <div class="no_balance">
+                <h1>Ты проиграл!</h1> 
+                <h2>Ваш баланс меньше единицы, что меньше минимальной ставки.</h2>
+                <h2>Чтобы начать новую игру, нажмите на кнопку ниже.</h2>
+                <button id="restart">Новая игра</button>
+            </div>
+            `
+            )
+        } else{
+            lostPage.insertAdjacentHTML('beforeend',
+            `
+            <div class="no_balance">
+                <h1>You lost!</h1> 
+                <h2>Your balance is less than one, which is less than the minimum bet.</h2>
+                <h2>To start a new game click on the button below.</h2>
+                <button id="restart">RESTART</button>
+            </div>
+            `
+            )
+        }
         const restartBtn = document.querySelector('#restart')
         restartBtn.addEventListener('click', function(){
             window.location.reload()

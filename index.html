@@ -15,21 +15,30 @@
 </head>
 <body>
     <header class="header">
-        <a href="https://github.com/eleciii4estvo/MoreOrLess" target="_blank">
-            <img src="img\logo.png" alt="site_logok" class='logo_img'>
-        </a>
-        <div class="balance">Balance: <span id="balance">10000</span></div>
+        <div class="left_side">
+            <a href="https://github.com/eleciii4estvo/MoreOrLess" target="_blank">
+                <img src="img\logo.png" alt="site_logok" class='logo_img'>
+            </a>
+            <div class="lang_buttons">
+                <button class="lang_btn animate__animated" id="btn_ru">ru</button>
+                <button class="lang_btn animate__animated" id="btn_en">en</button>
+            </div>
+        </div>
+        <div class="right_side">
+            <div data-lang="balance_header" class="balance">Balance: </div>
+            <div id="balance">10000</div>
+        </div>
     </header>
     <div class="wrapper">
         <div class="rules">
-            <h2 class="rules_header">Rules</h2>
+            <h2 data-lang="rules" class="rules_header">Rules</h2>
             <ul class="rules_list">
-                <li class="rules_list_item">1. In the white square, a number from 0 to 100 is guessed.</li>
-                <li class="rules_list_item">2. You choose which number comes up next: greater than, less than or equal to.</li>
-                <li class="rules_list_item">3. Enter your bet, which must be less than your balance.</li>
-                <li class="rules_list_item">4. The odds depend on which number is more likely to come up next. However, on equal is always the same, the highest coefficient = 98</li>
-                <li class="rules_list_item">5. After clicking on the "play" button, the next number and the result of the game will fall out.</li>
-                <li class="rules_list_item">6. You can see the history of the last game in the left corner of the screen.</li>
+                <li data-lang="rules_item_1" class="rules_list_item">1. In the white square, a number from 0 to 100 is guessed.</li>
+                <li data-lang="rules_item_2" class="rules_list_item">2. You choose which number comes up next: greater than, less than or equal to.</li>
+                <li data-lang="rules_item_3" class="rules_list_item">3. Enter your bet, which must be less than your balance.</li>
+                <li data-lang="rules_item_4" class="rules_list_item">4. The odds depend on which number is more likely to come up next. However, on equal is always the same, the highest coefficient = 98</li>
+                <li data-lang="rules_item_5" class="rules_list_item">5. After clicking on the "play" button, the next number and the result of the game will fall out.</li>
+                <li data-lang="rules_item_6" class="rules_list_item">6. You can see the history of the last game in the left corner of the screen.</li>
             </ul>
         </div>
         <div class="game_content">
@@ -37,19 +46,19 @@
             <h2 class="random_number animate__animated animate__tadae" id="envisioned">?</h2>
             <div class="answer_buttons">
                 <div class="guess">
-                    <button id="less" class="ans_button animate__animated">less</button>
+                    <button data-lang="guess_less" id="less" class="ans_button animate__animated">less</button>
                     <label id="coefficient_in_game_less">1.7</label>
                 </div>
                 <div class="guess">
-                    <button id="equally" class="ans_button animate__animated">equals</button>
+                    <button data-lang="guess_equals" id="equally" class="ans_button animate__animated">equals</button>
                     <label id="coefficient_in_game_equally">98</label>
                 </div>
                 <div class="guess">
-                    <button id="more" class="ans_button animate__animated">more</button>
+                    <button data-lang="guess_more" id="more" class="ans_button animate__animated">more</button>
                     <label id="coefficient_in_game_more">6.7</label>
                 </div>
             </div>
-            <h2 class="bet_label">BET</h2>
+            <h2 data-lang="bet_label" class="bet_label">BET</h2>
             <input type="range" min="0" max="100" step="1" value="50" id="slider" class="slider_bet">
             <input type="number" class="choose_bet" id="slider_value" value="0"/>
             <div class="play_btn_field">
@@ -59,15 +68,31 @@
             <div class="last_game_income">
                 
             </div>
-            <ul class="last_game_info"><h3 class="last_game_header">Last game</h3>
-                <li class="last_game_item">Result: <span id="result"></span></li>
-                <li class="last_game_item">Income: <span id="income"></span></li>
-                <li class="last_game_item">Initial: <span id="initial"></span></li>
-                <li class="last_game_item">Envisioned: <span id="envision"></span></li>
-                <li class="last_game_item">Guess: <span id="guess"></span></li>
-                <li class="last_game_item">Bet: <span id="bet"></span></li>
-                <li class="last_game_item">Coefficient: <span id="coefficient"></span></li>
-                <li class="last_game_item">Time: <span id="time"></span></li>
+            <ul class="last_game_info"><h3 data-lang="last_game" class="last_game_header">Last game</h3>
+                <div class="last_game_stroke">
+                    <li data-lang="last_game_item_1" class="last_game_item">Result: </li> <div id="result"></div>
+                </div>
+                <div class="last_game_stroke">
+                    <li data-lang="last_game_item_2" class="last_game_item">Income: </li> <div id="income"></div>
+                </div>
+                <div class="last_game_stroke">
+                <li data-lang="last_game_item_3" class="last_game_item">Initial: </li> <div id="initial"></div>
+                </div>
+                <div class="last_game_stroke">
+                <li data-lang="last_game_item_4" class="last_game_item">Envisioned: </li> <div id="envision"></div>
+                </div>
+                <div class="last_game_stroke">
+                <li data-lang="last_game_item_5" class="last_game_item">Guess: </li> <div id="guess"></div>
+                </div>
+                <div class="last_game_stroke">
+                <li data-lang="last_game_item_6" class="last_game_item">Bet: </li> <div id="bet"></div>
+                </div>
+                <div class="last_game_stroke">
+                <li data-lang="last_game_item_7" class="last_game_item">Coefficient: </li> <div id="coefficient"></div>
+                </div>
+                <div class="last_game_stroke">
+                <li data-lang="last_game_item_8" class="last_game_item">Time: </li> <div id="time"></div>    
+                </div>
             </ul>
         </div>
     </div>
@@ -75,12 +100,12 @@
     </div>
     <footer>
         <div class="footer_disclaimer">
-            <p class="footer_text">This website is a training project and is not intended for commercial use. All games featured on this website are designed for educational purposes only, and all virtual money given to users is of a virtual nature only.</p>                
-            <p class="footer_text">This site is hosted on GitHub Pages. GitHub Pages provides free hosting for static websites. You can learn more about GitHub Pages on their official website.</p>
+            <p data-lang="footer_item_1" class="footer_text">This website is a training project and is not intended for commercial use. All games featured on this website are designed for educational purposes only, and all virtual money given to users is of a virtual nature only.</p>                
+            <p data-lang="footer_item_2" class="footer_text">This site is hosted on GitHub Pages. GitHub Pages provides free hosting for static websites. You can learn more about GitHub Pages on their official website.</p>
             <a href="https://pages.github.com/" target="_blank">GitHub Pages Official Site</a>
         </div>
         <div class="footer_copyright">
-            <p class="footer_text">&copy; 2023 Eleciii4estvo, all rights reserved.</p>
+            <span>&copy;</span><p data-lang="footer_item_3" class="footer_text">2023 Eleciii4estvo, all rights reserved.</p>
         </div>
     </footer>
 
