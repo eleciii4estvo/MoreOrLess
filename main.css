@@ -138,6 +138,7 @@ body{
     background-color: #010101;
     margin-bottom: 10px;
     transition: 300ms;
+    text-align: center;
 }
 
 .ans_button:hover{
@@ -389,6 +390,7 @@ footer{
     background: #010101;
     color:#D5D8DD;
     border: solid 1px #39383D;
+    text-align: center;
 }
 
 #btn_ru:hover{

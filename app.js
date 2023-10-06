@@ -158,7 +158,6 @@ function changeLang(){
             el.textContent=languages[key][currentLang];
         }
     }
-    lastGameInfo()
 }
 changeLang()
 
