@@ -676,5 +676,9 @@ footer{
     .lost_window{
         order:4;
     }
+
+    .animations_choose_btn{
+        font-size: 10px;
+    }
 }
 
