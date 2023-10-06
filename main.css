@@ -146,6 +146,10 @@ body{
     border: solid 2px #0077ff70;
 }
 
+.choose_btn_without_animations{
+    border: solid 2px #0075ff;
+}
+
 .animate__flip{
     border: solid 2px #0075ff;
 }
@@ -176,6 +180,7 @@ body{
     font-size: 32px;
     font-weight: 500;
     transition: 0.2s;
+    background: #D5D8DD;
 }
 
 .play_button:hover{
@@ -376,6 +381,43 @@ footer{
     align-items: center;
 }
 
+.title_of_controls{
+    margin: 0 0 0 10px;
+}
+
+.buttons_controls{
+    display: flex;
+    flex-direction: row;
+}
+
+.animations_choose{
+    align-self: flex-start;
+    display: flex;
+    flex-direction: row;
+}
+
+.animations_choose_btn{
+    margin: 10px;
+    font-size: 20px;
+    width: 70px;
+    text-align: center;
+    background: #010101;
+    color:#D5D8DD;
+    border: solid 1px #39383D;
+    text-align: center;
+    transition:200ms ;
+}
+
+#animations_enabled:hover{
+    transform: scale(1.05);
+    border: solid 1px #0077ff70;
+}
+
+#animations_disabled:hover{
+    transform: scale(1.05);
+    border: solid 1px #0077ff70;
+}
+
 .lang_buttons{
     align-self: flex-end;
     display: flex;
@@ -385,12 +427,13 @@ footer{
 .lang_btn{
     margin: 10px;
     font-size: 20px;
-    width: 50px;
+    width: 70px;
     text-align: center;
     background: #010101;
     color:#D5D8DD;
     border: solid 1px #39383D;
     text-align: center;
+    transition: 200ms;
 }
 
 #btn_ru:hover{
@@ -401,6 +444,10 @@ footer{
 #btn_en:hover{
     transform: scale(1.05);
     border: solid 1px #0077ff70;
+}
+
+.choosed_action{
+    border: solid 2px #0075ff;
 }
 
 .animate__swing{
@@ -452,12 +499,9 @@ footer{
         text-align: center;
         background: #010101;
         color:#D5D8DD;
-        border: solid 1px #39383D;
     }
 
-    .animate__swing{
-        border: solid 2px #0075ff;
-    }
+
 
     #balance{
         font-size: 28px;
@@ -472,7 +516,14 @@ footer{
 
     .logo_img{
         width:50px;
-        margin:0 0 0 50px
+        margin:0 0 0 5px
+    }
+
+    .animations_choose_btn{
+        width: 50px;
+        font-size: 14px;
+        height: 30px;
+        margin: 5px;
     }
 
     .rules{

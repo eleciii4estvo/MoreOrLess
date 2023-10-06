@@ -16,6 +16,8 @@ const playBtnField = document.querySelector(".play_btn_field")
 let playBtn = ''
 const langBtnRu = document.querySelector("#btn_ru")
 const langBtnEn = document.querySelector("#btn_en")
+const animationsBtnOn = document.querySelector("#animations_enabled")
+const animationsBtnOff = document.querySelector("#animations_disabled")
 //Last Game
 const lastGameResultInfo = document.querySelector(".result_info")
 const lastGameIncome = document.querySelector(".last_game_income")
@@ -50,6 +52,7 @@ let isBtnready = false
 let isTimeOut = false
 let isInRangeBet = true
 let currentLang = 'ru'
+let isAnimations = true
 
 //Мультиязычность
 const languages = {
@@ -60,6 +63,22 @@ const languages = {
     'rules':{
         ru:'Правила',
         en:'Rules'
+    },
+    'animations_choose_header':{
+        ru:'Анимации',
+        en:'Animations'
+    },
+    'language_choose_header':{
+        ru:'Язык',
+        en:'Language'
+    },
+    'animation_on_header':{
+        ru:'вкл',
+        en:'on'
+    },
+    'animation_off_header':{
+        ru:'выкл',
+        en:'off'
     },
     'rules_item_1':{
         ru:'1. В верхем квадрате появляется число от 0 до 100.',
@@ -164,13 +183,15 @@ changeLang()
 function clearLangClasses(){
     langBtnRu.classList.remove('animate__swing')
     langBtnEn.classList.remove('animate__swing')
+    langBtnRu.classList.remove('choosed_action')
+    langBtnEn.classList.remove('choosed_action')
 }
 
 function startLang(){
     if(currentLang==="ru"){
-        langBtnRu.classList.add('animate__swing')
+        isAnimations ? langBtnRu.classList.add('animate__swing') : langBtnRu.classList.add('choosed_action')
     } else{
-        langBtnEn.classList.add('animate__swing')
+        isAnimations ? langBtnEn.classList.add('animate__swing') : langBtnEn.classList.add('choosed_action')
     }
 }
 
@@ -180,18 +201,49 @@ function chooseLang(event){
     if(event.target===langBtnRu){
         clearLangClasses()
         currentLang="ru"
-        langBtnRu.classList.add('animate__swing')
+        isAnimations ? langBtnRu.classList.add('animate__swing') : langBtnRu.classList.add('choosed_action')
         changeLang()
     } else{
         clearLangClasses()
         currentLang="en"
-        langBtnEn.classList.add('animate__swing')
+        isAnimations ? langBtnEn.classList.add('animate__swing') : langBtnEn.classList.add('choosed_action')
         changeLang()
     }
 }
 
+function startAnimations(){
+    if(isAnimations){
+        animationsBtnOn.classList.add('animate__swing')
+    } else{
+        animationsBtnOff.classList.add('choosed_action')
+    }
+}
+startAnimations()
 langBtnEn.addEventListener("click", chooseLang)
 langBtnRu.addEventListener("click", chooseLang)
+
+//Вкл/выкл анимаций
+function chooseAnimations(event){
+    if(event.target===animationsBtnOn){
+        clearAnimationsClasses()
+        isAnimations=true
+        animationsBtnOn.classList.add('animate__swing')
+    }else{
+        clearAnimationsClasses()
+        isAnimations=false
+        animationsBtnOff.classList.add('choosed_action')
+    }
+}
+
+function clearAnimationsClasses(){
+    animationsBtnOn.classList.remove('animate__swing')
+    animationsBtnOff.classList.remove('animate__swing')
+    animationsBtnOn.classList.remove('choosed_action')
+    animationsBtnOff.classList.remove('choosed_action')
+}
+
+animationsBtnOn.addEventListener("click", chooseAnimations)
+animationsBtnOff.addEventListener("click", chooseAnimations)
 
 //Перезапуск анимации
 function animationReset(element, animation){
@@ -206,17 +258,35 @@ function animationReset(element, animation){
 function checkCorrectInput(){
     if (slider.value!=0 && selection!='nothing' && !isBtnready && !isTimeOut && isInRangeBet){
         if(currentLang=='ru'){
-            playBtnField.insertAdjacentHTML('beforeend',
-            `            
-            <button class="play_button animate__animated animate__flipInX" id="play_btn">ИГРАТЬ</button>
-            `
-            )
+            if(isAnimations){
+                playBtnField.insertAdjacentHTML('beforeend',
+                `            
+                <button class="play_button animate__animated animate__flipInX" id="play_btn">ИГРАТЬ</button>
+                `
+                )
+            }else{
+                playBtnField.insertAdjacentHTML('beforeend',
+                `            
+                <button class="play_button animate__animated" id="play_btn">ИГРАТЬ</button>
+                `
+                )
+            }
+
         } else{
-            playBtnField.insertAdjacentHTML('beforeend',
-            `            
-            <button class="play_button animate__animated animate__flipInX" id="play_btn">PLAY</button>
-            `
-            )
+            if(isAnimations){
+                playBtnField.insertAdjacentHTML('beforeend',
+                `            
+                <button class="play_button animate__animated animate__flipInX" id="play_btn">PLAY</button>
+                `
+                )
+            } else{
+                playBtnField.insertAdjacentHTML('beforeend',
+                `            
+                <button class="play_button animate__animated" id="play_btn">PLAY</button>
+                `
+                )
+            }
+
         }       
         playBtn = document.querySelector("#play_btn")
         isBtnready=true
@@ -229,7 +299,9 @@ function checkCorrectInput(){
             isBtnready=false
             autopsy()
             setTimeout(()=>{game()}, timeOut)
-            animationReset(envisioned, 'animate__tada')
+            if(isAnimations){
+                animationReset(envisioned, 'animate__tada')
+            }
             result()   
             lastGameInfo()
             balanceSet()
@@ -287,7 +359,6 @@ function resultInfo(){
     `
     )
     setTimeout(()=>{
-
         const insertMsg = document.querySelector('.result_text')
         insertMsg.remove()
         btnClassCleaner()
@@ -348,17 +419,17 @@ function handleButtonChange(event) {
     if (event.target === lessButton) {
       selection = 'less'
       ruSelection = 'меньше'
-      lessButton.classList.add('animate__flip')
+      isAnimations ? lessButton.classList.add('animate__flip') : lessButton.classList.add('choose_btn_without_animations')
       userCf = cfLessNum
     } else if (event.target === equallyButton) {
       selection = 'equally'
       ruSelection = 'равно'
-      equallyButton.classList.add('animate__flip')
+      isAnimations ? equallyButton.classList.add('animate__flip') : equallyButton.classList.add('choose_btn_without_animations')
       userCf = cfEqualNum
     } else {
       selection = 'more'
       ruSelection = 'больше'
-      moreButton.classList.add('animate__flip')
+      isAnimations ? moreButton.classList.add('animate__flip') : moreButton.classList.add('choose_btn_without_animations')
       userCf = cfMoreNum
     }
     checkCorrectInput()
@@ -369,6 +440,9 @@ function btnClassCleaner(){
     moreButton.classList.remove('animate__flip')
     lessButton.classList.remove('animate__flip')
     equallyButton.classList.remove('animate__flip')
+    moreButton.classList.remove('choose_btn_without_animations')
+    lessButton.classList.remove('choose_btn_without_animations')
+    equallyButton.classList.remove('choose_btn_without_animations')
     selection = 'nothing'
 }
 
