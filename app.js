@@ -35,9 +35,11 @@ let cfLessNum = 0
 let cfEqualNum = 98
 let cfMoreNum = 0
 let userCf
+let secondProbability=0
 let envisionedNum = 0
 let envisionedNumLast
 let initNum
+let winProbability = 50
 let selection = 'nothing'
 let ruSelection = ''
 let ans = ''
@@ -297,12 +299,15 @@ function checkCorrectInput(){
             bet = slider.value
             playBtn.remove()
             isBtnready=false
-            autopsy()
+
+
             setTimeout(()=>{game()}, timeOut)
             if(isAnimations){
                 animationReset(envisioned, 'animate__tada')
             }
+            getAnswer(initNum, envisionedNum)
             result()   
+            autopsy()
             lastGameInfo()
             balanceSet()
             // console.log(`user input ${selection}, 
@@ -436,6 +441,7 @@ function handleButtonChange(event) {
       isAnimations ? moreButton.classList.add('animate__flip') : moreButton.classList.add('choose_btn_without_animations')
       userCf = cfMoreNum
     }
+    secondNumberSelection()
     checkCorrectInput()
   }
 
@@ -478,6 +484,7 @@ function result(){
         }
         resultVal='win'
         ruResultVal='победа'
+        winProbability<=5 ? winProbability=10 : winProbability = Math.floor(winProbability/2)
     } else{
         money -= bet
         income = `-${bet}`
@@ -488,18 +495,18 @@ function result(){
         }
         resultVal='lose'
         ruResultVal='проигрыш'
+        winProbability>=75 ? winProbability=60 : winProbability = winProbability+Math.floor(winProbability/3)
     }
+
     incomingInfo()
     resultInfo()
 }
 
 //Показ второго числа перед новым раундом
 function autopsy(){
-
     envisioned.textContent=envisionedNum
     setTimeout(()=>{
         envisioned.textContent='?'
-
         isTimeOut=false
     }, timeOut)
 
@@ -543,17 +550,50 @@ function checkBalance(){
 
 //Весь цикл игры, который будет повторяться при каждом раунде
 function game(){
+    secondProbability = getRandomNumber(0,100)
     slider.value=0
     sliderValue.value=0
     //Рандомное первое число
     initNum=randomInitialNumber()
     init.textContent=initNum
-    //Выбор второго числа
-    envisionedNum = randomEnvisionedNumber()
-    envisionedNumLast = envisionedNum
+    secondNumberSelection()
+    // //Выбор второго числа
+    // envisionedNum = randomEnvisionedNumber()
+    // envisionedNumLast = envisionedNum
     balanceSet()
     coefficientSelection(initNum)       //Задание коэффициентов
     ans = ''                            //Обнуление выбора и ответа
-    getAnswer(initNum, envisionedNum)   //Получаем правильный ответ
+       //Получаем правильный ответ
     checkBalance()                      //Проверка на отрицательный баланс
+}
+
+
+function getRandomNumber(min, max){
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+
+//Этот алгоритм генерирует второе число после каждого нажатия на кнопку
+//Но все зависит от второго параметра - winProbability который растет, если человек проигрывает
+//И уменьшается если выигрывает. Это реализовано в result()
+function secondNumberSelection(){
+    // console.log(winProbability, secondProbability, selection)
+    if(winProbability>=secondProbability){
+        if(selection=='more'){
+            envisionedNum=getRandomNumber(initNum, 97)
+        } else if (selection=='less'){
+            envisionedNum=getRandomNumber(2, initNum)
+        } else{
+            getRandomNumber(1,10)==2 ? envisionedNum=initNum : envisionedNum=getRandomNumber(0, 100)
+        }
+    } else{
+        if(selection=='more'){
+            envisionedNum=getRandomNumber(2, initNum)
+        } else if (selection=='less'){
+            envisionedNum=getRandomNumber(initNum, 97)
+        } else{
+            envisionedNum=getRandomNumber(0, 100)
+        }
+    }
+    envisionedNumLast=envisionedNum
 }
