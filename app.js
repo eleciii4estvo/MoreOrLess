@@ -405,6 +405,8 @@ function coefficientSelection(initNum){
     moreProbability=1 - lessProbability
     cfLessNum = lessProbability*5
     cfMoreNum = moreProbability*5
+    cfLessNum<0.5 ? cfLessNum+=1.5 : cfLessNum=cfLessNum
+    cfMoreNum<0.5 ? cfMoreNum+=1.5 : cfMoreNum=cfMoreNum
     cfLessNum<1 ? cfLessNum+=1 : cfLessNum=cfLessNum
     cfMoreNum<1 ? cfMoreNum+=1 : cfMoreNum=cfMoreNum
     cfLessNum<1.5 ? cfLessNum+=0.5 : cfLessNum=cfLessNum
