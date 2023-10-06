@@ -582,7 +582,7 @@ footer{
     }
 
     .ans_button{
-        font-size: 14px;
+        font-size: 10px;
     }
 
     .logo_img{
@@ -678,7 +678,11 @@ footer{
     }
 
     .animations_choose_btn{
-        font-size: 10px;
+        font-size: 8px;
     }
+    .lang_btn{
+        font-size: 8px;
+    }
+
 }
 
