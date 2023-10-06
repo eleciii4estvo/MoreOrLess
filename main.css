@@ -524,6 +524,7 @@ footer{
         font-size: 14px;
         height: 30px;
         margin: 5px;
+        text-align: center;
     }
 
     .rules{
@@ -578,6 +579,10 @@ footer{
         flex-wrap: nowrap;
         height: auto;
         order: 1;
+    }
+
+    .ans_button{
+        font-size: 14px;
     }
 
     .logo_img{
