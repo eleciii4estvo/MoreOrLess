@@ -407,6 +407,8 @@ function coefficientSelection(initNum){
     cfMoreNum = moreProbability*5
     cfLessNum<1 ? cfLessNum+=1 : cfLessNum=cfLessNum
     cfMoreNum<1 ? cfMoreNum+=1 : cfMoreNum=cfMoreNum
+    cfLessNum<1.5 ? cfLessNum+=0.5 : cfLessNum=cfLessNum
+    cfMoreNum<1.5 ? cfMoreNum+=0.5 : cfMoreNum=cfMoreNum
     cfLessNum = cfLessNum.toFixed(2)
     cfMoreNum = cfMoreNum.toFixed(2)
     cfLess.textContent=cfLessNum
